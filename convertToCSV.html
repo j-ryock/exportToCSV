@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Export Example</title>
+</head>
+<body>
+    <button id="exportButton">Export CSV</button>
+
+    <script>
+        // Sample variables and text
+        var var1 = "John";
+        var var2 = 30;
+
+        // Create an array with variables and corresponding text
+        const data = [
+            ['var1 = ', var1],
+            ['var2 = ', var2],
+        ];
+
+        // Function to convert a 2D array to a CSV string
+        function convertToCSV(dataArray) {
+            const csvArray = dataArray.map(row => row.join(','));
+            return csvArray.join('\n');
+        }
+
+        // Function to trigger CSV download
+        function downloadCSV() {
+            const csvData = convertToCSV(data);
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'exported_data.csv';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Attach the downloadCSV function to a button click event
+        const exportButton = document.getElementById('exportButton');
+        exportButton.addEventListener('click', downloadCSV);
+    </script>
+</body>
+</html>
